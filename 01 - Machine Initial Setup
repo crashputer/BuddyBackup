@@ -1,4 +1,7 @@
 [Notes]
 The ultimate goal of this project is to make a bootable installation disk that will largely automate the setup process. For this reason, this setup instruction will be using Debian Minimal.
 
+[Theory/Things to consider]
+Drive partitioning is the method currently used in this procedure to enforce drive quota, but this requires all partitions to be created and the system design to be finalized before the installation of the operating system. Quota software will be investigated later in order to allow for easier installation.
+
 [Procedure]
