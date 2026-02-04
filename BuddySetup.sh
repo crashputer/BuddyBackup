@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# This will be cleaned up, labeled, and become a proper script. I'm just getting things written down.
+
 sudo apt update && apt upgrade -y
 sudo apt install samba rclone -y
 sudo chown -R buddy:buddy /usr/local/local
