@@ -5,3 +5,23 @@ The ultimate goal of this project is to make a bootable installation disk that w
 Drive partitioning is the method currently used in this procedure to enforce drive quota, but this requires all partitions to be created and the system design to be finalized before the installation of the operating system. Quota software will be investigated later in order to allow for easier installation.
 
 [Procedure]
+This will vary wildly depending on the individual's build and needs. This guide assumes a single drive installation. Ideally, both computers will match. Create the following partitions:
+  -EFI - 100M
+  -Root - 20G 
+  -Swap - 150% the size of RAM
+  -Local - 50% of the remaining space - mount at /usr/local/local
+  -Remote - The rest of the remaining space - mount at /usr/local/remote
+
+Deselect all modules from the installation process except for base utilities and SSH.
+
+Create the user 'buddy'.
+
+1st login: Log in as root
+  - apt install sudo
+  - usermod -aG sudo buddy
+  - logout
+
+Log in as 'buddy'
+
+Run the BuddySetup.sh script
+
