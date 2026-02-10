@@ -19,7 +19,6 @@ if [ -f /var/run/reboot-required ]; then
     exit 1
 else
     echo "No reboot needed. Continuing..."
-    exit 0
 fi
 
 # Install all necessary packages
