@@ -25,23 +25,34 @@ fi
 # Install all necessary packages
 apt install samba rclone openssh-server -y
 
-# Variables
-LOCAL_DIRECTORY="/usr/local/local"
-REMOTE_DIRECTORY="/usr/local/remote"
-USERNAME="buddy"
+#Variables
 
-#User Inputs
-read -e -p "Enter the SMB share username. (Default: $USERNAME) -i "$USERNAME" USERNAME
+DEFAULTUSER="buddy"
+DEFAULTLOCALSHARENAME="buddy"
+DEFAULTLOCALDIRECTORY="/usr/local/local"
+DEFAULTREMOTESHARENAME="remote"
+DEFAULTREMOTEDIRECTORY="/usr/local/remote"
 
-# This will become a proper script. I'm just getting things written down.
+# User Inputs
 
-chown -R buddy:buddy /usr/local/local
-chmod -R 755 /usr/local/local
-chown -R buddy:buddy /usr/local/remote
-chmod -R 755 /usr/local/remote
-echo -e "[buddy]\\ncomment = Local Share\\npath = /usr/local/local\\nread only = no\\nbrowsable = yes\\nwritable = yes\\nguest ok = no\\nvalid users = buddy\\n\\n[remote]\\ncomment = Local Share\\npath = /usr/local/remote\\nread only = no\\nbrowsable = no\\nwritable = yes\\nguest ok = no\\nvalid users = buddy" | sudo tee -a /etc/samba/smb.conf
+read -e -p "Enter the SMB share username. (Default: $DEFAULTUSER): " -i "$DEFAULTUSER" USERNAME
+read -e -p "Enter a password for the SMB shares." SMBPASSWORD
+read -e -p "Enter the LOCAL share name. (Default: $DEFAULTLOCALSHARENAME): " -i "$DEFAULTLOCALSHARENAME" LOCALSHARENAME 
+read -e -p "Enter the LOCAL share directory. (Default: $DEFAULTLOCALDIRECTORY): " -i "$DEFAULTLOCALDIRECTORY" LOCALDIRECTORY
+read -e -p "Enter the REMOTE share name. (Default: $DEFAULTREMOTESHARENAME): " -i "$DEFAULTLOCALSHARENAME" REMOTESHARENAME
+read -e -p "Enter the remote share directory. (Default: $DEFAULTREMOTEDIRECTORY): " -i "$DEFAULTREMOTEDIRECTORY" REMOTEDIRECTORY
+
+# Create user accounts and folders
+adduser --quiet --disabled-password --gecos "" "$USERNAME"
+echo -e "$SMBPASSWD\n$SMBPASSWORD" | smbpasswd -s "$USERNAME"
+mkdir -p $LOCALDIRECTORY
+mkdir -p $REMOTEDIRECTORY
+chown -R $USERNAME:$USERNAME $LOCALDIRECTORY
+chown -R $USERNAME:$USERNAME $REMOTEDIRECTORY
+chmod -R 755 $LOCALDIRECTORY
+chmod -R 755 $REMOTEDIRECTORY
+
+#Add shares to /etc/samba/smb.conf
+
+echo -e "\\n\\n[$LOCALSHARENAME]\\ncomment = Local Share\\npath = $LOCALSHAREDIRECTORY\\nread only = no\\nbrowsable = yes\\nwritable = yes\\nguest ok = no\\nvalid users = $USERNAME\\n\\n[$REMOTESHARENAME]\\ncomment = Remote Share\\npath = $REMOTESHAREDIRECTORY\\nread only = no\\nbrowsable = no\\nwritable = yes\\nguest ok = no\\nvalid users = $USERNAME" >> /etc/samba/smb.conf
 systemctl restart samba
-echo "..."
-echo "Enter a new SMB Password"
-echo "..."
-smbpasswd -a buddy
