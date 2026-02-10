@@ -23,7 +23,7 @@ else
 fi
 
 # Install all necessary packages
-apt install samba rclone -y
+apt install samba rclone openssh-server -y
 
 # This will become a proper script. I'm just getting things written down.
 
