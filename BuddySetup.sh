@@ -13,9 +13,9 @@ apt upgrade -y
 
 # Check if reboot is necessary before continuing
 if [ -f /var/run/reboot-required ]; then
-    echo "***--------------------------------------------------------------***"
+    echo "--------------------------------------------------------------------"
     echo "Reboot required. Please reboot the computer then restart the script."
-    echo "***--------------------------------------------------------------***"
+    echo "--------------------------------------------------------------------"
     exit 1
 else
     echo "No reboot needed. Continuing..."
@@ -24,6 +24,14 @@ fi
 
 # Install all necessary packages
 apt install samba rclone openssh-server -y
+
+# Variables
+LOCAL_DIRECTORY="/usr/local/local"
+REMOTE_DIRECTORY="/usr/local/remote"
+USERNAME="buddy"
+
+#User Inputs
+read -e -p "Enter the SMB share username. (Default: $USERNAME) -i "$USERNAME" USERNAME
 
 # This will become a proper script. I'm just getting things written down.
 
