@@ -1,30 +1,31 @@
 #!/bin/bash
 
-# SUDO check
-if [[ $UID != 0 ]]; then
-    echo "This script must be run with sudo:"
-    echo "sudo $0 $*"
+set -e
+
+# Ensure running as root
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root. Either switch to root or use sudo."
     exit 1
 fi
 
-# Start with a fully updated system
+# Start with a fully updated system and install all dependencies
 apt update
 apt upgrade -y
-
-# Check if reboot is necessary before continuing
-if [ -f /var/run/reboot-required ]; then
-    echo "--------------------------------------------------------------------"
-    echo "Reboot required. Please reboot the computer then restart the script."
-    echo "--------------------------------------------------------------------"
-    exit 1
-else
-    echo "No reboot needed. Continuing..."
-fi
-
-# Install all necessary packages
 apt install samba rclone openssh-server -y
 
-#Variables
+# Check if reboot is necessary before continuing
+
+if [[ -f /var/run/reboot-required ]]; then
+    echo
+    echo "--------------------------------------------------------------------"
+    echo "Reboot required. Please reboot the computer then restart this script."
+    echo "--------------------------------------------------------------------"
+    exit 1
+fi
+
+echo "No reboot required. Continuing..."
+
+#Default Variables
 
 DEFAULTUSER="buddy"
 DEFAULTLOCALSHARENAME="buddy"
