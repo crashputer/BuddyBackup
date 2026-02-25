@@ -2,7 +2,7 @@
 
 [What is BuddyBackup?]
 
-BuddyBackup is a two-way non-cloud offsite backup solution to be shared between two entities. This project aims to automate the process of building a secure offsite two-way backup solution that does NOT rely on any cloud services, subscriptions, or any other external influences. This project is intended to run on two PCs with similar data storage capacities in separate physical locations. The two-way aspect allows users at both location to store files which will be securely backed up to the other PC. Files sent to the remote location for backup will be encrypted. BackupBuddy is a tool to be used as part of the standard 3-2-1 data backup process.
+BuddyBackup is a simple, secure two-way non-cloud offsite backup system. This project aims to automate the process of building a secure offsite two-way backup solution that does NOT rely on any cloud services, subscriptions, or any other external influences. This project is intended to run on two PCs with similar data storage capacities in separate physical locations. The two-way aspect allows users at both location to store files which will be securely backed up to the other PC. Files sent to the remote location for backup will be encrypted. BackupBuddy is a tool to be used as part of the standard 3-2-1 data backup process.
 
 [Why?]
 
