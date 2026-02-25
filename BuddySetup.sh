@@ -15,7 +15,7 @@ apt install samba rclone openssh-server -y
 
 # Check if reboot is necessary before continuing
 
-if [[ -f /var/run/reboot-required ]]; then
+if [ -f /var/run/reboot-required ]; then
     echo
     echo "--------------------------------------------------------------------"
     echo "Reboot required. Please reboot the computer then restart this script."
@@ -54,7 +54,7 @@ fi
 
 # Create folders and set permissions
 
-echo -e "$SMBPASSWD\n$SMBPASSWORD" | smbpasswd -s "$USERNAME"
+echo -e "$SMBPASSWD\\n$SMBPASSWORD" | smbpasswd -s "$USERNAME"
 mkdir -p $LOCALDIRECTORY
 mkdir -p $REMOTEDIRECTORY
 chown -R $USERNAME:$USERNAME $LOCALDIRECTORY
