@@ -54,7 +54,7 @@ fi
 
 # Create folders and set permissions
 
-echo -e "$SMBPASSWD\\n$SMBPASSWORD" | smbpasswd -s "$USERNAME"
+echo -e "$SMBPASSWORD\\n$SMBPASSWORD" | smbpasswd -s "$USERNAME"
 mkdir -p $LOCALDIRECTORY
 mkdir -p $REMOTEDIRECTORY
 chown -R $USERNAME:$USERNAME $LOCALDIRECTORY
