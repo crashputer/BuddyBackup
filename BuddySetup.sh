@@ -39,11 +39,21 @@ read -e -p "Enter the SMB share username. (Default: $DEFAULTUSER): " -i "$DEFAUL
 read -e -p "Enter a password for the SMB shares." SMBPASSWORD
 read -e -p "Enter the LOCAL share name. (Default: $DEFAULTLOCALSHARENAME): " -i "$DEFAULTLOCALSHARENAME" LOCALSHARENAME 
 read -e -p "Enter the LOCAL share directory. (Default: $DEFAULTLOCALDIRECTORY): " -i "$DEFAULTLOCALDIRECTORY" LOCALDIRECTORY
-read -e -p "Enter the REMOTE share name. (Default: $DEFAULTREMOTESHARENAME): " -i "$DEFAULTLOCALSHARENAME" REMOTESHARENAME
+read -e -p "Enter the REMOTE share name. (Default: $DEFAULTREMOTESHARENAME): " -i "$DEFAULTREMOTESHARENAME" REMOTESHARENAME
 read -e -p "Enter the remote share directory. (Default: $DEFAULTREMOTEDIRECTORY): " -i "$DEFAULTREMOTEDIRECTORY" REMOTEDIRECTORY
 
-# Create user accounts and folders
-adduser --quiet --disabled-password --gecos "" "$USERNAME"
+
+# Check and create user account
+if id "$USERNAME" &>/dev/null; then
+    echo "User $USERNAME already exists. Skipping creation."
+else
+    echo "User $USERNAME does not exist. Creating user."    
+    adduser --quiet --disabled-password --gecos "" "$USERNAME"
+fi
+
+
+# Create folders and set permissions
+
 echo -e "$SMBPASSWD\n$SMBPASSWORD" | smbpasswd -s "$USERNAME"
 mkdir -p $LOCALDIRECTORY
 mkdir -p $REMOTEDIRECTORY
