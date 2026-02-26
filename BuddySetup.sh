@@ -29,14 +29,17 @@ echo "No reboot required. Continuing..."
 
 DEFAULTUSER="buddy"
 DEFAULTLOCALSHARENAME="buddy"
-DEFAULTLOCALDIRECTORY="/usr/local/local"
 DEFAULTREMOTESHARENAME="remote"
-DEFAULTREMOTEDIRECTORY="/usr/local/remote"
+
 
 # User Inputs
 
 read -e -p "Enter the SMB share username. (Default: $DEFAULTUSER): " -i "$DEFAULTUSER" USERNAME
 read -e -p "Enter a password for the SMB shares." SMBPASSWORD
+
+DEFAULTLOCALDIRECTORY="/home/$USERNAME/local"
+DEFAULTREMOTEDIRECTORY="/home/$USERNAME/remote"
+
 read -e -p "Enter the LOCAL share name. (Default: $DEFAULTLOCALSHARENAME): " -i "$DEFAULTLOCALSHARENAME" LOCALSHARENAME 
 read -e -p "Enter the LOCAL share directory. (Default: $DEFAULTLOCALDIRECTORY): " -i "$DEFAULTLOCALDIRECTORY" LOCALDIRECTORY
 read -e -p "Enter the REMOTE share name. (Default: $DEFAULTREMOTESHARENAME): " -i "$DEFAULTREMOTESHARENAME" REMOTESHARENAME
@@ -54,7 +57,7 @@ fi
 
 # Create folders and set permissions
 
-echo -e "$SMBPASSWORD\\n$SMBPASSWORD" | smbpasswd -s "$USERNAME"
+echo -e "$SMBPASSWORD\\n$SMBPASSWORD" | smbpasswd -sa "$USERNAME"
 mkdir -p $LOCALDIRECTORY
 mkdir -p $REMOTEDIRECTORY
 chown -R $USERNAME:$USERNAME $LOCALDIRECTORY
