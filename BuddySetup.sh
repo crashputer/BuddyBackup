@@ -70,3 +70,11 @@ chmod -R 755 $REMOTEDIRECTORY
 echo -e "\\n\\n[$LOCALSHARENAME]\\ncomment = Local Share\\npath = $LOCALSHAREDIRECTORY\\nread only = no\\nbrowsable = yes\\nwritable = yes\\nguest ok = no\\nvalid users = $USERNAME\\n\\n[$REMOTESHARENAME]\\ncomment = Remote Share\\npath = $REMOTESHAREDIRECTORY\\nread only = no\\nbrowsable = no\\nwritable = yes\\nguest ok = no\\nvalid users = $USERNAME" >> /etc/samba/smb.conf
 
 systemctl restart samba
+
+# rclone sync /home/buddy/buddy/ buddy_secure: --progress
+# [buddy_secure]
+# type = crypt
+# remote = buddy_remote:remote
+# password = ysXB1ywG-ybydKlNYzsv4iAFBUq_dD4DMzonMaQ
+
+
