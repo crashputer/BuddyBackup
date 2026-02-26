@@ -57,7 +57,7 @@ fi
 
 # Create folders and set permissions
 
-echo -e "$SMBPASSWORD\\n$SMBPASSWORD" | smbpasswd -sa "$USERNAME"
+(echo "$SMBPASSWORD"; echo "$SMBPASSWORD") | smbpasswd -as "$USERNAME"
 mkdir -p $LOCALDIRECTORY
 mkdir -p $REMOTEDIRECTORY
 chown -R $USERNAME:$USERNAME $LOCALDIRECTORY
@@ -68,4 +68,5 @@ chmod -R 755 $REMOTEDIRECTORY
 #Add shares to /etc/samba/smb.conf
 
 echo -e "\\n\\n[$LOCALSHARENAME]\\ncomment = Local Share\\npath = $LOCALSHAREDIRECTORY\\nread only = no\\nbrowsable = yes\\nwritable = yes\\nguest ok = no\\nvalid users = $USERNAME\\n\\n[$REMOTESHARENAME]\\ncomment = Remote Share\\npath = $REMOTESHAREDIRECTORY\\nread only = no\\nbrowsable = no\\nwritable = yes\\nguest ok = no\\nvalid users = $USERNAME" >> /etc/samba/smb.conf
+
 systemctl restart samba
